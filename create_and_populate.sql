@@ -12,7 +12,7 @@ INSERT INTO user_types (user_type_name) VALUES
 CREATE TABLE users ( -- members/table
 	user_id SERIAL PRIMARY KEY,
 	type_of_user INTEGER REFERENCES user_types(user_type_id),
-	username VARCHAR(255) NOT NULL,
+	username VARCHAR(255) NOT NULL UNIQUE,
 	password_key VARCHAR(255) NOT NULL,
 	first_name VARCHAR(255) NOT NULL,
 	last_name VARCHAR(255) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE users ( -- members/table
 	address VARCHAR(255) NOT NULL
 );
 
-INSERT INTO users (type_of_user, username, password_key) VALUES (1, 'admin', 'admin');
+INSERT INTO users (type_of_user, username, password_key) VALUES (1, 'admin', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 CREATE TABLE administration (
 	admin_id SERIAL PRIMARY KEY,
