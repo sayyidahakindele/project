@@ -9,7 +9,7 @@ INSERT INTO user_types (user_type_name) VALUES
 	('member'),
     ('trainer');
 
-CREATE TABLE users ( -- members/table
+CREATE TABLE users ( -- members/trainer
 	user_id SERIAL PRIMARY KEY,
 	type_of_user INTEGER REFERENCES user_types(user_type_id),
 	username VARCHAR(255) NOT NULL UNIQUE,
@@ -20,23 +20,13 @@ CREATE TABLE users ( -- members/table
 	phone_num VARCHAR(15) NOT NULL,
 	sex VARCHAR(32) NOT NULL,
 	dob DATE NOT NULL,
-	address VARCHAR(255) NOT NULL
+	home_addr VARCHAR(255) NOT NULL
 );
 
-INSERT INTO users (type_of_user, username, password_key) VALUES (1, 'admin', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-CREATE TABLE administration (
-	admin_id SERIAL PRIMARY KEY,
-    user_id INTEGER UNIQUE REFERENCES users(user_id)
+CREATE TABLE members (
+	member_id INT REFERENCES users(user_id) PRIMARY KEY
 );
 
-CREATE TABLE members ( --id=user_id
-	-- billing/payments
+INSERT INTO users (type_of_user, username, password_key, first_name, last_name, email, phone_num, sex, dob, home_addr) VALUES (1, 'admin', 'admin', '', '', '', '', '', '1000-10-10', '');
 
-);
-
-CREATE TABLE trainers (--id=user_id
-	
-);
-
-INSERT INTO users (type_of_user, username, password_key) VALUES (1, 'admin', 'admin');
+INSERT INTO users (type_of_user, username, password_key, first_name, last_name, email, phone_num, sex, dob, home_addr) VALUES (2, 'damibisi', 'thisisdamispassword', 'Damilola', 'Olabisi', 'damilolabisi@example.com', '2281027401', 'female', '2000-08-31', 'Apartment 2108, 101 Champagne Ave S, Ottawa, Ontario, Canada');

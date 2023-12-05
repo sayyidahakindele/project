@@ -99,10 +99,7 @@ app.post("/memberlogin", async (req, res)=> {
 				req.session.loggedin = true;
 				req.session.type = 2;
 				req.session.username = username;
-				const result3 = await db.query('SELECT member_id FROM members WHERE user_id = $1', [
-					user.user_id,
-				]);
-				res.send(result3);
+				res.send(user.user_id);
 			} else {
 				res.status(400);
 				res.send("not right password");
@@ -207,10 +204,7 @@ app.post("/adminlogin", async (req, res)=> {
 				req.session.loggedin = true;
 				req.session.type = 1;
 				req.session.username = username;
-				const result3 = await db.query('SELECT admin_id FROM administration WHERE user_id = $1', [
-					user.user_id,
-				]);
-				res.send(result3);
+				res.send();
 			} else {
 				res.status(400);
 				res.send("not right password");
@@ -222,12 +216,12 @@ app.post("/adminlogin", async (req, res)=> {
 	}
 });
 
-// app.get("/memberregister", (req, res)=> { 
-//     console.log(req.method + " " + req.url);
-// 	res.statusCode = 200;
-// 	res.setHeader("Content-Type","text/html");
-// 	res.render("pages/memberregister");
-// });
+app.get("/memberregister", (req, res)=> { 
+    console.log(req.method + " " + req.url);
+	res.statusCode = 200;
+	res.setHeader("Content-Type","text/html");
+	res.render("pages/memberregister");
+});
 
 app.get("/adminprofile", (req, res)=> {
 	console.log(req.method + " " + req.url);

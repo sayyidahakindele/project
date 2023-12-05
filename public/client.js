@@ -27,7 +27,7 @@ function memberlogin() {
             let x = this.responseText;
             console.log(x);
             alert("You have successfully logged in");
-            window.location = "/members/" + x;
+            window.location = "/home";
         } else if(this.readyState==4 && this.status==400) {
             if (this.responseText == "already logged in") {
                 alert("ERROR: You are already logged in");
@@ -58,7 +58,7 @@ function trainerlogin() {
             let x = this.responseText;
             console.log(x);
             alert("You have successfully logged in");
-            window.location = "/trainers/" + x;
+            window.location = "/home";
         } else if(this.readyState==4 && this.status==400) {
             if (this.responseText == "already logged in") {
                 alert("ERROR: You are already logged in");
@@ -86,8 +86,6 @@ function adminlogin() {
     let req = new XMLHttpRequest();
     req.onreadystatechange = function () {
         if(this.readyState==4 && this.status==200) {
-            let x = this.responseText;
-            console.log(x);
             alert("You have successfully logged in");
             window.location = "/adminprofile";
         } else if(this.readyState==4 && this.status==400) {
