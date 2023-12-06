@@ -1,4 +1,4 @@
-let info = {id: {}, username: {}, password: {}};
+let user_info = {id: {}, username: {}, password: {}, first_name: {}, last_name: {}, email: {}, phone_num: {}, sex: {}, dob: {}, home_addr: {}};
 
 function memberlogininit() {
     document.getElementById("memberlogin").onclick = memberlogin;
@@ -16,10 +16,13 @@ function logoutinit() {
     document.getElementById("logout").onclick = logout;
 }
 
+function memberregisterinit() {
+    document.getElementById("memberregister").onclick = memberregister;
+}
+
 function memberlogin() {
-    info.username = document.getElementById("username-input").value;
-    info.password = document.getElementById("password-input").value;
-    console.log("m");
+    user_info.username = document.getElementById("username-input").value;
+    user_info.password = document.getElementById("password-input").value;
 
     let req = new XMLHttpRequest();
     req.onreadystatechange = function () {
@@ -44,12 +47,12 @@ function memberlogin() {
     };
     req.open("POST", "http://localhost:3000/memberlogin");
     req.setRequestHeader("Content-Type", "application/json");
-    req.send(JSON.stringify(info));
+    req.send(JSON.stringify(user_info));
 }
 
 function trainerlogin() {
-    info.username = document.getElementById("username-input").value;
-    info.password = document.getElementById("password-input").value;
+    user_info.username = document.getElementById("username-input").value;
+    user_info.password = document.getElementById("password-input").value;
     console.log("t");
 
     let req = new XMLHttpRequest();
@@ -75,12 +78,12 @@ function trainerlogin() {
     };
     req.open("POST", "http://localhost:3000/trainerlogin");
     req.setRequestHeader("Content-Type", "application/json");
-    req.send(JSON.stringify(info));
+    req.send(JSON.stringify(user_info));
 }
 
 function adminlogin() {
-    info.username = document.getElementById("username-input").value;
-    info.password = document.getElementById("password-input").value;
+    user_info.username = document.getElementById("username-input").value;
+    user_info.password = document.getElementById("password-input").value;
     console.log("a");
 
     let req = new XMLHttpRequest();
@@ -104,7 +107,7 @@ function adminlogin() {
     };
     req.open("POST", "http://localhost:3000/adminlogin");
     req.setRequestHeader("Content-Type", "application/json");
-    req.send(JSON.stringify(info));
+    req.send(JSON.stringify(user_info));
 }
 
 //onclick function for logout button
@@ -121,4 +124,52 @@ function logout() {
 	req.open("POST", "http://localhost:3000/logout");
 	req.setRequestHeader("Content-Type", "application/json");
 	req.send();
+}
+
+function memberregister() {
+    user_info.username = document.getElementById("newusername").value;
+    user_info.password = document.getElementById("newpassword").value;
+    user_info.first_name = document.getElementById("newfirst").value;
+    user_info.last_name = document.getElementById("newlast").value;
+    user_info.email = document.getElementById("newemail").value;
+    user_info.phone_num = document.getElementById("newnumber").value;
+    user_info.sex = document.getElementById("newsex").value;
+    user_info.dob = document.getElementById("newdob").value;
+    user_info.home_addr = document.getElementById("newaddress").value;
+
+    let req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if(this.readyState==4 && this.status==200) {
+            let x = JSON.parse(this.responseText);
+            alert("You have successfully created an account");
+            window.location = "/profile/" + x;
+        } else if(this.readyState==4 && this.status==400) {
+            if (this.responseText == "already logged in") {
+                alert("ERROR: You are already logged in");
+            } else if (this.responseText == "no username") {
+                alert("ERROR: Please enter a username");
+            } else if (this.responseText == "no password") {
+                alert("ERROR: Please enter a password");
+            } else if (this.responseText == "no first") {
+                alert("ERROR: Please enter your first name");
+            } else if (this.responseText == "no last") {
+                alert("ERROR: Please enter your last name");
+            } else if (this.responseText == "no email") {
+                alert("ERROR: Please enter your email");
+            } else if (this.responseText == "no phone") {
+                alert("ERROR: Please enter your phone number");
+            } else if (this.responseText == "no sex") {
+                alert("ERROR: Please enter your sex");
+            } else if (this.responseText == "no dob") {
+                alert("ERROR: Please enter your date of birth");
+            } else if (this.responseText == "no address") {
+                alert("ERROR: Please enter your address");
+            } else if (this.responseText == "already") {
+                alert("ERROR: This username already exists \nPlease pick another name");
+            }
+        }
+    };
+    req.open("POST", "http://localhost:3000/memberregister");
+    req.setRequestHeader("Content-Type", "application/json");
+    req.send(JSON.stringify(user_info));
 }

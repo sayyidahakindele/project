@@ -46,8 +46,8 @@ function exposeSession(req, res, next) {
     next();
 }
 
-app.get("/", (req, res)=> { 
-		console.log(req.method + " " + req.url);
+app.get(["/", "/home"], (req, res) => {
+	console.log(req.method + " " + req.url);
 	res.statusCode = 200;
 	res.setHeader("Content-Type","text/html");
 	res.render("pages/home");
@@ -99,7 +99,7 @@ app.post("/memberlogin", async (req, res)=> {
 				req.session.loggedin = true;
 				req.session.type = 2;
 				req.session.username = username;
-				res.send(user.user_id);
+				res.send();
 			} else {
 				res.status(400);
 				res.send("not right password");
@@ -221,6 +221,74 @@ app.get("/memberregister", (req, res)=> {
 	res.statusCode = 200;
 	res.setHeader("Content-Type","text/html");
 	res.render("pages/memberregister");
+});
+
+app.post("/memberregister", async (req, res) => {
+    console.log(req.method + " " + req.url);
+    if (req.session.loggedin) {
+        res.status(400);
+        res.send("already logged in")
+        return;
+    }
+    if (req.body.username == "") {
+        res.status(400);
+        res.send("no username");
+    } else if (req.body.password == "") {
+        res.status(400);
+        res.send("no password");
+    } else if (req.body.first_name == "") {
+        res.status(400);
+        res.send("no first");
+    } else if (req.body.last_name == "") {
+        res.status(400);
+        res.send("no last");
+    } else if (req.body.email == "") {
+        res.status(400);
+        res.send("no email");
+    } else if (req.body.phone_num == "") {
+        res.status(400);
+        res.send("no phone");
+    } else if (req.body.sex == "") {
+        res.status(400);
+        res.send("no sex");
+    } else if (req.body.dob == "") {
+        res.status(400);
+        res.send("no dob");
+    } else if (req.body.home_addr == "") {
+        res.status(400);
+        res.send("no address");
+		return;
+    } else {
+        const { username, password, first_name, last_name, email, phone_num, sex, dob, home_addr } = req.body;
+        const result1 = await db.query('SELECT * FROM users WHERE username = $1', [
+			username,
+        ]);
+		if (result1.rows.length > 0) {
+			res.status(400);
+            res.send("already");
+		} else {
+			const result = await db.query('INSERT INTO users (type_of_user, username, password_key, first_name, last_name, email, phone_num, sex, dob, home_addr) VALUES (2, $1, $2, $3, $4, $5, $6, $7, $8, $9)', [
+				username,
+				password,
+				first_name,
+				last_name,
+				email,
+				phone_num,
+				sex,
+				dob,
+				home_addr,
+			]);
+			const new_id = await db.query('SELECT user_id from users WHERE username = $1', [
+				username,
+			]);
+			req.session.user_id = new_id;
+			req.session.loggedin = true;
+			req.session.type = 2;
+			req.session.username = username;
+			res.status(200);
+			res.send(new_id);
+		}
+    }
 });
 
 app.get("/adminprofile", (req, res)=> {
