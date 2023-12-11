@@ -439,6 +439,10 @@ app.get("/addnew/:user_id", async (req, res)=> {
 	const results = await db.query('SELECT * FROM metrics WHERE member_id = $1 ORDER BY new_date DESC', [
 		userid,
 	]);
+	if (results.rows.length === 0) {
+		let original = { new_weight: 0, height: 0 };
+		results.rows.push(original);
+	}
 	const info = results.rows[0];
 	const url = req.url.split("/")[2];
 	const type = 1;
