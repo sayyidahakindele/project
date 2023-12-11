@@ -17,12 +17,12 @@ HOW TO RUN
 
 FUNCTIONALITY
 -------------
-- Login as a member with username = <damibisi> and password = <damispassword>
+- Login as a member with username = damibisi and password = damispassword
 - Change and save personal details
 - Add new health metric
 - Get exercise routine
 - Register as a new member
-- Login as admin with username = <admin> and password = <admin>
+- Login as admin with username = admin and password = admin
 - Get all trainers
 - Create new trainer
 - Log in as a trainer
