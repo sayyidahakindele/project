@@ -3,8 +3,11 @@ html
 		title#title All trainers
 	body(onload='trainerregisterinit()')
 		include ../partials/header
+		h4 ALL MEMBERS
 		for each in trainers
-			h4 #{each.first_name} 
+			p #{each.first_name} 
+		br
+		h4 CREATE NEW TRAINER
 		div#form(class='form')
 			input(id="newusername" class="form-input" type="text" name="username" placeholder="enter a username...")
 			input(id="newpassword" class="form-input" type="text" name="pass" placeholder="enter a password...")

@@ -92,7 +92,7 @@ function adminlogin() {
     req.onreadystatechange = function () {
         if(this.readyState==4 && this.status==200) {
             alert("You have successfully logged in");
-            window.location = "/trainers";
+            window.location = "/";
         } else if(this.readyState==4 && this.status==400) {
             if (this.responseText == "already logged in") {
                 alert("ERROR: You are already logged in");
@@ -142,10 +142,8 @@ function memberregister() {
     let req = new XMLHttpRequest();
     req.onreadystatechange = function () {
         if(this.readyState==4 && this.status==200) {
-            let x = this.responseText;
-            console.log(x);
             alert("You have successfully created an account");
-            window.location = "/profile/" + x;
+            window.location = "/";
         } else if(this.readyState==4 && this.status==400) {
             if (this.responseText == "already logged in") {
                 alert("ERROR: You are already logged in");

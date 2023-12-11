@@ -46,6 +46,14 @@ function exposeSession(req, res, next) {
     next();
 }
 
+//GET request for home page
+app.get(["/", "/home"], (req, res) => { 
+    console.log(req.method + " " + req.url);
+	res.statusCode = 200;
+	res.setHeader("Content-Type","text/html");
+	res.render("pages/index");
+});
+
 //GET request that renders login page
 app.get("/login", (req, res)=> { 
 	console.log(req.method + " " + req.url);
@@ -372,8 +380,7 @@ app.post("/memberregister", async (req, res) => {
 				req.session.loggedin = true;
 				req.session.type = 2;
 				req.session.username = username;
-				
-				return res.status(200).send(userId);
+				return res.status(200).send();
 		}
     }
 });
